@@ -152,7 +152,8 @@ test("the handoff and build plan carry the owned studio work without secrets", (
 });
 
 test('current and historical Studio briefs retain their exact reviewed source pins', async () => {
-  assert.equal(mediaStudioSource.source.commit, 'e2f4e83d8e30df44e3288b9a8ce2f40555d059f2');
+  assert.equal(mediaStudioSource.source.commit, 'c91184fd6c940f13940109b27b9a4c82849f6312');
+  assert.ok(mediaStudioSource.legacySources.some(source => source.commit === 'e2f4e83d8e30df44e3288b9a8ce2f40555d059f2'));
   assert.ok(mediaStudioSource.legacySources.some(source => source.commit === '52193c9bdb322c8406f6138400b811aa783032a9'));
   const { readFile } = await import('node:fs/promises');
   const historical = JSON.parse(await readFile(new URL('../public/media-studio/media-studio-brief-20261114.json', import.meta.url), 'utf8'));
