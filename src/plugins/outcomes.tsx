@@ -466,10 +466,14 @@ function WorkspaceOutcomes({ search }: { search: string }) {
       if (live.current) {
         setPublicPreview(undefined);
         setPublicConsent(false);
-        setError(
+        const detail =
           cause instanceof Error
             ? cause.message
-            : "The public report did not complete. Preview again before retrying.",
+            : "The request could not be confirmed.";
+        setError(
+          publish
+            ? `${detail} The report may already be public. Preview again before any retry.`
+            : `${detail} The preview was not available. Try again.`,
         );
       }
     } finally {
