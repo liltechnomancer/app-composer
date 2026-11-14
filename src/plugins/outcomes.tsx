@@ -44,8 +44,10 @@ const dayStateText = (
   retained: boolean,
 ) => {
   if (point.value === null) return "History unavailable";
-  if (retained) return point.value === 0 ? "No retained snapshot" : "Retained snapshots";
-  if (firstObserved && point.date === firstObserved) return "First retained day · partial";
+  if (retained)
+    return point.value === 0 ? "No retained snapshot" : "Retained snapshots";
+  if (firstObserved && point.date === firstObserved)
+    return "First retained day · partial";
   if (isToday && point.date === windowEnd) return "Today, UTC · partial";
   if (point.value === 0) return "Retained zero · no event recorded";
   return "Recorded lower bound";
@@ -368,7 +370,7 @@ function WorkspaceOutcomes({ search }: { search: string }) {
           : current,
       );
       setMessage(
-        "Future recording classification saved. Existing counts were not rewritten.",
+        "Future traffic choice saved. Earlier counts were not changed.",
       );
     } catch (cause) {
       if (live.current) {
@@ -376,8 +378,8 @@ function WorkspaceOutcomes({ search }: { search: string }) {
         setError(
           (cause instanceof Error
             ? cause.message
-            : "The acknowledgement is unavailable.") +
-            " Your choice is retained. Refresh to check the saved classification before another write.",
+            : "The save could not be confirmed.") +
+            " Your choice is still here. Refresh to check what was saved before making another change.",
         );
       }
     } finally {
@@ -410,7 +412,7 @@ function WorkspaceOutcomes({ search }: { search: string }) {
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       setMessage(
-        `Aggregate export downloaded for the displayed scope. The export query ran at ${new Date(raw.export.generatedAt).toLocaleString("en-AU", { timeZone: "UTC" })} UTC${changedFilters ? ". Pending filters were not applied" : ""}.`,
+        `Download requested for the displayed report. The export was generated at ${new Date(raw.export.generatedAt).toLocaleString("en-AU", { timeZone: "UTC" })} UTC${changedFilters ? ". Pending filters were not applied" : ""}.`,
       );
     } catch (cause) {
       if (live.current)
@@ -450,9 +452,7 @@ function WorkspaceOutcomes({ search }: { search: string }) {
       if (!live.current) return;
       if (publish) {
         setPublicUrl(result.url!);
-        setMessage(
-          "The permitted aggregate is now public at the frozen report link.",
-        );
+        setMessage("The approved aggregate is public at the report link.");
       } else {
         setPublicPreview({
           report: result.report,
@@ -549,8 +549,8 @@ function WorkspaceOutcomes({ search }: { search: string }) {
           {busy
             ? "Loading…"
             : uncertain
-              ? "Check saved classification"
-              : "Refresh applied scope"}
+              ? "Check saved traffic choice"
+              : "Refresh report"}
         </button>
       </div>
       {report && (
@@ -612,7 +612,7 @@ function WorkspaceOutcomes({ search }: { search: string }) {
         report.scope.instance && (
           <details className="co-public-story">
             <summary id="co-public-story-title">
-              Share a permitted Open-action aggregate
+              Share an Open-action count
             </summary>
             <p>
               Preview the exact counts, dates and traffic classification.
@@ -680,7 +680,7 @@ function WorkspaceOutcomes({ search }: { search: string }) {
             )}
             {publicUrl && (
               <p>
-                <a href={publicUrl}>Open the frozen public report</a>
+                <a href={publicUrl}>Open the public report</a>
               </p>
             )}
           </details>
@@ -952,8 +952,8 @@ function WorkspaceOutcomes({ search }: { search: string }) {
               {dirty && <p>Your unsaved choice is retained here.</p>}
               {uncertain && (
                 <p>
-                  Refresh this report to reconcile the saved classification
-                  before another change.
+                  Refresh the report to check the saved traffic choice before
+                  making another change.
                 </p>
               )}
             </section>
