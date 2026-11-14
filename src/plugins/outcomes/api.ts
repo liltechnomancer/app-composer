@@ -67,7 +67,7 @@ export async function publicOutcomeCall(
   );
   const raw = await parseApiResponse<unknown>(
     response,
-    "The public report request did not complete. Review the aggregate before retrying.",
+    "The public report request could not be confirmed. Review the aggregate before retrying.",
   );
   if (!raw || typeof raw !== "object")
     throw new Error("Invalid public report acknowledgement.");
