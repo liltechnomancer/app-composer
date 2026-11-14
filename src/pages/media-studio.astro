@@ -156,7 +156,9 @@ const costs = [
     </details>
     <p>The phrase "open-source Higgsfield-style studio" describes the kind of workspace, not feature parity. Higgsfield's models, camera controls, casting and node graph are proprietary and are not reproduced here. This studio calls vendor models; it does not train or host foundation models, and the providers used here charge for inference.</p>
     <h3>What the studio reuses</h3>
-    <p>Get Ready checks the machine, Init saves the brief, and the agent handoff names the source and build steps. The studio also uses Composer's EmDash session and workspace permissions, with separate grants to read, edit, generate, publish and administer. Before a privileged request, it checks the current grant with Composer again. Levi's MIT Fungi projects informed parts of the build: Oyster hosted Prints for an earlier Composer capability run, and Darkroom's job engine informed the studio's engine. The studio does not include Darkroom itself. Its published catalogue accepts Fungi-gateway video models and Oyster-shaped references, which would need a second job authority for an independent Cloudflare studio. The studio repository records that assessment and its reasons.</p>
+    <p>Get Ready checks the machine, Init saves the brief, and the handoff tells the agent which source and build steps to use. The studio uses Composer's EmDash session and workspace permissions. Read, edit, generate, publish and admin are separate grants, checked with Composer again before a privileged request.</p>
+    <p>Levi's MIT-licensed Fungi projects informed the build. Oyster hosted Prints for an earlier Composer capability run, and Darkroom's job engine informed the studio's engine. Media Studio does not include Darkroom.</p>
+    <p>Darkroom's published catalogue accepts Fungi-gateway video models and Oyster-shaped references. Using it in an independent Cloudflare studio would need a second job authority. The studio repository records the assessment and its reasons.</p>
     <p>For this studio, I built audio parsing and waveforms, storyboards and bounded renders, signed links for render inputs, image variants, browser mixing and scoped Composer sessions. I also added editing for saved compositions and made the 9:16 derivative described below.</p>
   </section>
 
@@ -182,7 +184,7 @@ const costs = [
 }`}</code></pre>
     <p>Revision 2 added the sound defaults. A revision 1 draft still validates: its sound fields are filled in rather than rejected, so an older saved brief does not break. The studio rechecks every value on its own server; the spec never enables a provider or promises a model the studio has not qualified.</p>
     <p>You can export the spec and import the same choices later. "Copy agent handoff" gives your agent the pinned source, storage and secret names, and build plan. It also identifies the steps you handle: accounts, sign-in and spending approval. The handoff describes the work; the deployment showed it had been done.</p>
-    <p><a class="inline-cta" href="/media-studio/tutorial#init">The tutorial walks the same step with the screens and checkpoints →</a></p>
+    <p><a class="inline-cta" href="/media-studio/tutorial#init">Follow this step in the tutorial →</a></p>
   </section>
 
   <section id="build" class="prose">
