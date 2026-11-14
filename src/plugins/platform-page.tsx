@@ -264,7 +264,7 @@ export function PlatformWorkspace({ search }: { search: string }) {
     link.download = `platform-request-${entry.id}.json`;
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(url), 0);
-    setMessage("Validated request specification downloaded.");
+    setMessage("Download requested for the request specification.");
   };
   const copy = async (entry: PlatformRequest) => {
     const text =
