@@ -7,7 +7,7 @@ import { publicFilmAsset } from "../src/lib/public-film-assets.ts";
 const path = "/media-studio/demos/after-hours-audio-trim-phone-20261115.mp4";
 const bytes = await readFile(new URL("../public" + path, import.meta.url));
 const digest =
-  "a68182f6fc5e67701530b79b895f31072b22feab6cc3834d23cdd40aa9f773a8";
+  "3c8459e4be21f88ed8e63d094d2a38a83124380178d1d28e121176b2232bb1c5";
 const etag = '"audio-trim-test"';
 
 // A small in-memory stand-in for Cloudflare's range-capable cache, used only to
@@ -82,7 +82,7 @@ test("the static video is routed through its range handler", async () => {
 });
 
 test("the allowlisted Phone Audio Trim film metadata matches its committed bytes", () => {
-  assert.equal(bytes.length, 240893);
+  assert.equal(bytes.length, 233026);
   assert.equal(createHash("sha256").update(bytes).digest("hex"), digest);
 });
 test("Phone Audio Trim video responds with seekable and unsatisfiable ranges", async () => {
