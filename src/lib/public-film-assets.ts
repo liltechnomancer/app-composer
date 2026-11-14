@@ -20,6 +20,11 @@ films.set("/media-studio/demos/fighter-after-hours-20261115.mp4", {
   bytes: 6102511,
   sha256: "4776ea2edf943be87137ae29f75e21a75054d6a02c52b734fc509d838bd895b0",
 });
+films.set("/media-studio/demos/after-hours-audio-trim-20261115.mp4", {
+  href: "/media-studio/demos/after-hours-audio-trim-20261115.mp4",
+  bytes: 338098,
+  sha256: "c4525913ba691dd807479880179431f57eb03e637236f709b6dd4c701baeb987",
+});
 interface Assets {
   fetch(request: Request): Promise<Response>;
 }
