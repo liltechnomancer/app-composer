@@ -98,7 +98,7 @@ const costs = [
     <div class="art-hero-copy">
       <p class="kicker">Build log · Media Studio</p>
       <h1>Building an open-source AI media studio with App Composer</h1>
-      <p class="deck">I described a studio I wanted to own. Get Ready checked the machine, Init wrote a specification I could read, and my agent built and deployed it as its own Cloudflare application. This is what it does, how it is put together, what it cost, and how the studio then made the artwork and vertical motion on this page.</p>
+      <p class="deck">I described a studio I wanted to own. Get Ready checked the machine, Init wrote a specification I could read, and my agent built and deployed it as its own Cloudflare application. This is what it does, how it is put together, what we estimated spending, and how the studio then made the artwork and vertical motion on this page.</p>
       <div class="row">
         <a class="button" href="/media-studio/studio">Open your studio</a>
         <a class="button secondary" href="/init?start=media-studio">Build your studio</a>
@@ -138,7 +138,7 @@ const costs = [
 
   <section id="what" class="prose">
     <h2>What actually works</h2>
-    <p>The studio is not a mock-up with a generate button. It has a project library, real uploads, four still routes, a reference variation, real masked fill and outpaint, background removal, upscaling, two image-to-video routes, three sound routes, a browser mix with trim/gain/fades, a bounded storyboard, a true 9:16 derivative of the selected order, scoped Composer access and deliberate publication. Each claim below names what was exercised on the deployed application, and where an external route is currently blocked.</p>
+    <p>The initial release had a project library, uploads, stills and reference variations, masked edits, background removal, upscaling, two image-to-video models, sound, a browser mix, storyboards, scoped Composer access and deliberate publication. The 9:16 example was finished locally from the saved takes. Since then, the studio has added MiniMax H3 and a separate on-device storyboard renderer. The table records what was exercised in the original build, including the provider route that was blocked.</p>
     <div class="table-wrap">
       <table>
         <caption>Delivered capabilities and their real state on 2026/11/14, Australia/Melbourne (AEDT, UTC+11).</caption>
@@ -188,7 +188,7 @@ const costs = [
     <h3>Keeping track of requests</h3>
     <p>Before a paid image, video, sound or assembly request is sent, the studio records the job and reserves its estimated cost. It checks concurrent requests against the same budget. If saving a finished result fails, the retained file can be saved again without making another generation request. When the provider outcome is unknown, the reservation stays in place until the job is reconciled; the studio does not automatically resubmit it.</p>
     <h3>How a provider render gets its files</h3>
-    <p>Assembly is not "run ffmpeg on whatever the user selected". A composition takes two to six saved clips, each at most 10.5 seconds, 60 seconds in total, plus one saved audio bed. The render is one provider composition, and the result is copied into the studio's own bucket. The same durable job engine drives it, so a closed browser does not lose the render and a failed read does not silently re-render.</p>
+    <p>Assembly is not "run ffmpeg on whatever the user selected". At the time of this build, a composition took two to six saved clips, each at most 10.5 seconds, 60 seconds in total, plus one saved audio bed. The current limit is 16 seconds per clip. A provider render sends one composition; if it succeeds, the result is copied into the studio's own bucket. The same durable job engine drives it, so a closed browser does not lose the render and a failed read does not silently re-render.</p>
     <p>The provider needs to read the participating files, and the studio's media endpoints require a current session. Rather than making a project public, the server signs one asset for one project with an expiry:</p>
     <pre><code>{`// src/lib/render-links.mjs — one asset, one project, thirty minutes
 const payload = \`\${assetId}.\${projectId}.\${expires}\`;
@@ -209,7 +209,7 @@ url.searchParams.set("s", signature);`}</code></pre>
     <p>Outpainting uses the same tool deliberately: the studio builds a 25% larger canvas, centres the original, and masks the new border. Background removal is BiRefNet returning a transparent PNG; upscaling is Clarity at 2×. All three were exercised on the deployed studio, and all three save the result beside the source rather than over it.</p>
     <p>One implementation detail was not obvious: the provider's image fetcher refused the studio's signed HTTPS links, even though they were public and worked in a browser. The fix was to send the exact bytes as a data URI. That is also why the fill job now stores the source and mask hashes on the generation row: the provider never needs a durable public copy of either.</p>
     <h3>Making and saving sound</h3>
-    <p>You can upload WAV, MP3 or M4A audio, or generate an instrumental bed with Studio Score and narration from your own script with Studio Voice. The studio saves each sound separately, records its duration, sample rate, channels, source and cost, and draws the waveform from the audio file.</p>
+    <p>You can upload WAV, MP3 or M4A audio, or generate an instrumental bed with Studio Score and narration from your own script with Studio Voice. The studio saves each sound separately, records its duration, sample rate, channels, source and estimated cost, and draws the waveform from the audio file.</p>
     <figure class="figure">
       <img src={sound} width="1440" height="900" alt="The Create tab with Make sound selected: Studio Score, a written direction, a 17-second length, and an estimate before the request." loading="lazy" />
       <figcaption>One paid request, estimated first. The length control arrived with the change below, so a bed can fit the cut instead of being padded afterwards.</figcaption>
@@ -271,7 +271,7 @@ url.searchParams.set("s", signature);`}</code></pre>
     </figure>
     <div class="table-wrap">
       <table>
-        <caption>The real chain for this page, 2026/11/14 Australia/Melbourne (AEDT, UTC+11). Hashes are SHA-256 of the retained bytes; the studio holds the full records.</caption>
+        <caption>Estimated request amounts and the real chain for this page, 2026/11/14 Australia/Melbourne (AEDT, UTC+11). Hashes are SHA-256 of the retained bytes; the studio holds the full records.</caption>
         <thead><tr><th scope="col">Step</th><th scope="col">Route and setting</th><th scope="col">Retained result</th></tr></thead>
         <tbody>
           <tr><th scope="row">Brief</th><td>Studio project “App Composer — studio launch artwork”</td><td>Private project with creative direction and references</td></tr>
@@ -408,11 +408,11 @@ url.searchParams.set("s", signature);`}</code></pre>
       </table>
     </div>
     <p>Direct ElevenLabs access is the one provider gap: the studio uses ElevenLabs' models through fal's hosted endpoint, billed by fal, and says so. ACE Music is excluded from this delivery entirely — no adapter, no key, no promise. The ffmpeg compose result block is an external permission change on the selected fal account; it is not a claim that the application or its stored work disappeared.</p>
-    <h3>What it cost</h3>
+    <h3>What we estimated spending</h3>
     <div class="table-wrap">
       <table>
-        <caption>Selected requests from the two projects in this build. Rows marked <code>est.</code> are estimates. These figures have not been checked against an invoice; the provider invoice is authoritative.</caption>
-        <thead><tr><th scope="col">Object</th><th scope="col">Route</th><th scope="col">Cost</th><th scope="col">Outcome</th></tr></thead>
+        <caption>Selected requests from the two projects in this build. These are recorded estimates and request amounts, not verified charges. Check the provider invoice for the amount actually billed.</caption>
+        <thead><tr><th scope="col">Object</th><th scope="col">Route</th><th scope="col">Recorded amount</th><th scope="col">Outcome</th></tr></thead>
         <tbody>
           {costs.map(([name, route, cost, result]) => (
             <tr><th scope="row">{name}</th><td><code>{route}</code></td><td>{cost}</td><td>{result}</td></tr>
