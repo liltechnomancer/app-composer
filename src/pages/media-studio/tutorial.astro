@@ -394,9 +394,13 @@ const promptAgent = 'Use the saved Media Studio specification and the pinned sou
     <h2>Trim a song on your device</h2>
     <p>We opened the full 4½-minute <a href="https://fm.loftwah.com/media/refined/After%20Hours.mp3">After Hours by LoftwahFM</a>, selected fifteen seconds and added fades in the <a href="https://media.loftwah.com/tools/audio-trim">audio trim tool</a>.</p>
     <figure class="figure">
-      <video controls playsinline preload="none" poster="/media-studio/demos/after-hours-audio-trim-poster-20261115.jpg" width="1280" height="900" aria-label="Recording of trimming After Hours in Media Studio">
+      <video class="audio-demo-desktop" controls playsinline preload="none" poster="/media-studio/demos/after-hours-audio-trim-poster-20261115.jpg" width="1280" height="900" aria-label="Recording of trimming After Hours in Media Studio">
         <source src="/media-studio/demos/after-hours-audio-trim-20261115.mp4" type="video/mp4" />
         <a href="/media-studio/demos/after-hours-audio-trim-20261115.mp4">Download the Audio Trim recording</a>
+      </video>
+      <video class="audio-demo-phone" controls playsinline preload="none" poster="/media-studio/demos/after-hours-audio-trim-phone-poster-20261115.jpg" width="390" height="844" aria-label="Phone recording of trimming After Hours in Media Studio">
+        <source src="/media-studio/demos/after-hours-audio-trim-phone-20261115.mp4" type="video/mp4" />
+        <a href="/media-studio/demos/after-hours-audio-trim-phone-20261115.mp4">Download the phone recording</a>
       </video>
       <figcaption>Silent browser recording, edited to remove waits; file selection was automated. After Hours is by LoftwahFM, made with Suno. <a href="/media-studio/demos/after-hours-audio-trim-20261115.mp4" download>Download the recording</a>.</figcaption>
     </figure>
@@ -516,6 +520,8 @@ curl -s -o /dev/null -w '%&#123;http_code&#125;\n' https://your-studio.example/a
   .check p{font-size:.92rem}
   pre{background:rgba(0,0,0,.26);border:1px solid var(--line,rgba(255,255,255,.16));padding:14px;overflow-x:auto;font-size:.8rem;line-height:1.6;margin:14px 0 18px}
   code{font-size:.88em;overflow-wrap:anywhere}
+  .tut video.audio-demo-phone{display:none}
+  @media (max-width:600px){.tut video.audio-demo-desktop{display:none}.tut video.audio-demo-phone{display:block}}
   .figure{margin:24px 0 8px}
   .figure img{display:block;width:100%;height:auto;border:1px solid var(--line,rgba(255,255,255,.16))}
   figcaption{font-size:.78rem;line-height:1.55;color:var(--muted,#b9b2a8);margin-top:10px}
