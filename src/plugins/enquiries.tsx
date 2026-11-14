@@ -547,7 +547,7 @@ function WorkspaceEnquiries({ search }: { search: string }) {
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 0);
     setMessage(
-      "Downloaded this app-owned private inbox. Keep the file private; it contains submitted briefs.",
+      "Download requested for this private inbox. If you save the file, keep it private: it contains submitted briefs.",
     );
   }
   const currentPublication = options?.stacks
