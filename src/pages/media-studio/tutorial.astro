@@ -88,28 +88,28 @@ const promptAgent = 'Use the saved Media Studio specification and the pinned sou
 
   <section id="accounts" class="step">
     <p class="kicker">02 · Accounts and the supported agent</p>
-    <h2>The parts only you can do</h2>
+    <h2>Set up your accounts</h2>
     <dl class="roles">
-      <div><dt>You</dt><dd>Create or sign in to Cloudflare, fund fal.ai, start your agent.</dd></div>
+      <div><dt>You</dt><dd>Sign in to Cloudflare and start your agent. Add fal.ai credit if you want to use its paid tools.</dd></div>
       <div><dt>Your agent or the studio</dt><dd>The agent prepares the technical environment; it never creates accounts or spends for you.</dd></div>
-      <div><dt>Look for</dt><dd>A funded provider balance and an agent that can run commands.</dd></div>
+      <div><dt>Look for</dt><dd>A Cloudflare account and an agent that can run commands.</dd></div>
     </dl>
     <div class="cols">
       <div>
-        <p>You control account creation, terms and spending. Start by:</p>
+        <p>Start with your Cloudflare account and an agent that can run commands. You control account creation, terms and spending.</p>
         <ul>
           <li>Create or sign in to your Cloudflare account and confirm Workers Paid with Containers if you intend to use the Oyster route. The independent studio itself needs Workers Paid and Workers AI.</li>
-          <li>Create a fal.ai account and add credit. Fal-backed video, sound and provider assembly bill there.</li>
+          <li>For fal-backed video, sound, image edits or provider assembly, create a fal.ai account and add credit. Those requests are billed there.</li>
           <li>Start a supported agent (for example a coding agent with terminal access) in an empty project directory and connect it to Composer's Get Ready.</li>
         </ul>
         <p>Ask the agent to check the environment first; do not hand it the build brief yet:</p>
         <pre><code>Check this machine and my connected accounts with App Composer's Get Ready. Do not create or deploy anything yet. Tell me what is missing, then wait while I handle sign-in or billing.</code></pre>
         <p>You'll choose the brief and pinned source in Init, then hand them to your agent in chapter 05.</p>
-        <p>You handle account creation, sign-in and spending decisions. Your agent can prepare the repository, configure the app, run migrations and deploy it. Keep secrets out of chat, screenshots and source files; enter them through the provider’s secret storage.</p>
+        <p>Your agent can prepare the repository, configure the app, run migrations and deploy it. Keep secrets out of chat, screenshots and source files; enter them through the provider’s secret storage.</p>
       </div>
       <aside class="check">
         <h3>Checkpoint</h3>
-        <p>You can see a funded fal.ai balance and your Cloudflare account has Workers AI available. No key has been pasted into chat, a prompt, a screenshot or a repository.</p>
+        <p>Your Cloudflare account has Workers AI available, and your agent can run commands. If you plan to use fal-backed tools, check that your fal.ai account has credit. Keep keys out of chat, prompts, screenshots and repositories.</p>
         <h3>Recover</h3>
         <p><strong>No fal key yet?</strong> Uploads, the library, Workers AI stills, export and publication remain available. Fal-backed fills, cutout, upscale, video, sound and assembly need the studio’s own configured key; availability and funding are checked separately.</p>
       </aside>
@@ -455,7 +455,7 @@ curl -s -o /dev/null -w '%&#123;http_code&#125;\n' https://your-studio.example/a
       <li><code>POST /api/projects/:id/compositions</code> — save an ordered manifest of takes and a bed.</li>
       <li><code>POST /api/projects/:id/compositions/:cid/render</code> — one bounded render job; <code>studio-assembly</code> or <code>studio-social</code>.</li>
       <li><code>GET /render-input/:assetId?p&amp;e&amp;s</code> — signed, thirty-minute, single-asset read for a render job only.</li>
-      <li><code>GET /api/projects/:id/export</code> — project, prompts, lineage and costs without secrets.</li>
+      <li><code>GET /api/projects/:id/export</code> — project data, prompts, lineage and costs. Provider keys and session cookies are excluded; project text and links may contain sensitive information.</li>
     </ul>
     <h3>Troubleshooting</h3>
     <dl class="faults">
