@@ -110,6 +110,7 @@ const costs = [
     </div>
     <figure class="art-hero-figure">
       <img src={hero} width="1600" height="1000" alt="The Media Studio library for the Paper & Light project: an assembled 17-second cut, two sound assets drawn as waveforms, and three saved takes." loading="eager" />
+      <a href={hero} aria-label="Open full-size studio library screenshot">Open full-size image</a>
       <figcaption>The working studio, after the change described below: an assembled cut, generated sound with real waveforms, and the takes they came from.</figcaption>
     </figure>
   </header>
@@ -161,6 +162,7 @@ const costs = [
     <p>Start in <a href="/init?start=media-studio">Init → Media Studio</a>. Choose what you want to make, the starting models, frame and clip length. This release also added sound model and bed-length defaults. Saving the draft does not provision services, buy credit or call a model.</p>
     <figure class="figure">
       <img src={init} width="1600" height="1000" alt="The Init form's Media Studio section: project name, what the studio should make, still and video model, default frame and clip length, and the saving note." loading="lazy" />
+      <a href={init} aria-label="Open full-size Init form screenshot">Open full-size image</a>
       <figcaption>The Media Studio section of Init on the live page: what the studio should make, the still and video models, and the sound model and bed length added in this release. A saved draft carries defaults, never credentials.</figcaption>
     </figure>
     <p>The draft becomes a portable specification. Its media section holds validated defaults; it does not provision services:</p>
@@ -212,6 +214,7 @@ url.searchParams.set("s", signature);`}</code></pre>
     <p>You can upload WAV, MP3 or M4A audio, or generate an instrumental bed with Studio Score and narration from your own script with Studio Voice. The studio saves each sound separately, records its duration, sample rate, channels, source and estimated cost, and draws the waveform from the audio file.</p>
     <figure class="figure">
       <img src={sound} width="1440" height="900" alt="The Create tab with Make sound selected: Studio Score, a written direction, a 17-second length, and an estimate before the request." loading="lazy" />
+      <a href={sound} aria-label="Open full-size sound creation screenshot">Open full-size image</a>
       <figcaption>One paid request, estimated first. The length control arrived with the change below, so a bed can fit the cut instead of being padded afterwards.</figcaption>
     </figure>
     <p><a href="/media-studio/direct">Learn to direct a shot, plan sound and share a result in the creative field guide →</a></p>
@@ -226,15 +229,18 @@ url.searchParams.set("s", signature);`}</code></pre>
     <p>During this build, fal accepted new <code>ffmpeg-api</code> compose requests but returned a 403 permission error before reading the files. The studio keeps the request and offers <strong>Reconcile</strong> to check its result without submitting another paid job. A signed provider webhook confirmed the underlying model error. The 9:16 example on this page was instead finished locally with ffmpeg using the saved takes, sound and slate. It is 720×1280, 17.79 seconds, with 44.1 kHz stereo audio; the command and hashes are kept in the studio. The earlier 4:5 file remains in the project too.</p>
     <figure class="figure">
       <img src={storyboard} width="1440" height="900" alt="The Assemble tab showing a saved storyboard with three shots and an audio bed, a render button, and the assembled result below." loading="lazy" />
+      <a href={storyboard} aria-label="Open full-size storyboard screenshot">Open full-size image</a>
       <figcaption>The storyboard and its renders stay together in the project that holds the source media.</figcaption>
     </figure>
     <figure class="figure">
       <img src={audioAsset} width="1440" height="900" alt="An audio asset page: the waveform, a player, the duration, sample rate and channel count, the SHA-256 and downloads." loading="lazy" />
+      <a href={audioAsset} aria-label="Open full-size audio asset screenshot">Open full-size image</a>
       <figcaption>The saved narration has a waveform, audio metadata, hash and download. It can be published or used in a storyboard.</figcaption>
     </figure>
     <p>A published page shows its title, description and media, and can include downloads and source credits. Prompts, other projects and filenames stay private, and private APIs return 401 to a signed-out visitor. Withdrawing a page stops new visits, though it cannot recall a file someone has already downloaded.</p>
     <figure class="figure">
       <img src={publicPage} width="1440" height="900" alt="The public page for the assembled cut: title, description, video player, dimensions and a download link." loading="lazy" />
+      <a href={publicPage} aria-label="Open full-size public page screenshot">Open full-size image</a>
       <figcaption>The published master, signed out: <a href="https://media.loftwah.com/p/Na9FNUB_VhzZ7zA9">media.loftwah.com/p/Na9FNUB_VhzZ7zA9</a>.</figcaption>
     </figure>
     <h3>Watching it happen</h3>
@@ -335,10 +341,12 @@ url.searchParams.set("s", signature);`}</code></pre>
     <figure class="figure pair">
       <div>
         <img src={beforeEdit} width="1440" height="991" alt="Before: the Assemble tab says no storyboard saved yet, and the audio bed has no length choice." loading="lazy" />
+      <a href={beforeEdit} aria-label="Open full-size before edit screenshot">Open full-size image</a>
         <figcaption>Before: the saved storyboard missing from the tab.</figcaption>
       </div>
       <div>
         <img src={afterEdit} width="1440" height="900" alt="After: the same tab shows the saved storyboard, an editing notice, a changed-since-render note and two preserved renders." loading="lazy" />
+      <a href={afterEdit} aria-label="Open full-size after edit screenshot">Open full-size image</a>
         <figcaption>After: the same tab, with the composition loaded for editing and both renders kept.</figcaption>
       </div>
     </figure>
