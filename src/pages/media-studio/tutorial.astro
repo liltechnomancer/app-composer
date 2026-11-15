@@ -444,6 +444,33 @@ printf '%s' "$SESSION_SECRET" | npx wrangler secret put SESSION_SECRET
 printf '%s' "$FAL_KEY" | npx wrangler secret put FAL_KEY
 pnpm run deploy -- --migrate</code></pre>
     <p>Requires Node 22.23.5+, 24.22.3+ or 26.13.1+ on the 22/24/26 lines. <code>pnpm run deploy</code> refuses a dirty tree, a branch other than <code>main</code>, or an unpushed commit, runs the focused tests once, deploys, and fails unless the live <code>/healthz</code> revision equals the shipped commit. Expected output ends with <code>released &lt;sha&gt;</code> and <code>live: https://…/healthz</code>.</p>
+    <h3>The Oyster route, tested with Fungi 0.42.0</h3>
+    <p>The optional Oyster route was checked against Fungi 0.42.0: <code>@fungi.computer/oyster</code> 0.30.0 and <code>@fungi.computer/darkroom</code> 0.10.0. To add only the image and video App to an Oyster you have already deployed, run:</p>
+    <pre><code>export OYSTER_OWNER_KEY=&lt;your owner key&gt;
+npx @fungi.computer/oyster@0.30.0 install-apps --only prints</code></pre>
+    <p>An unknown App name is refused with the list of valid ones. The standalone example config in 0.30.0 already sets <code>"minify": true</code>, so a plain <code>npx wrangler deploy</code> passes the Worker startup limit.</p>
+    <h3>No Computer? Read references from, and save results to, your own R2 bucket</h3>
+    <p>The Oyster route reads reference images from a Computer path. A host that has no Computer can use Darkroom 0.10.0's R2 destination instead: object keys are the paths, URLs are never accepted, and your own check runs before every read, write and paid request. Pass a reference as <code>&#123; computerId: "studio-bucket", path: "&lt;object key&gt;" &#125;</code>; the field keeps its historical name but carries your destination id.</p>
+    <pre><code>import &#123; createMediaService &#125; from "@fungi.computer/darkroom/server";
+import &#123;
+  createImagesReferenceFitter,
+  createR2MediaDestination,
+  createWorkersAiMediaProvider,
+&#125; from "@fungi.computer/darkroom/cloudflare";
+
+const app = createMediaService(&#123;
+  scope: &#123; actorId, namespace: "studio", owner: "media", destinationId: "studio-bucket" &#125;,
+  operations: env.MEDIA_OPERATION, // MediaOperationDO binding
+  provider: createWorkersAiMediaProvider(env.AI),
+  metering: "unmetered",
+  destination: createR2MediaDestination(&#123;
+    bucket: env.STUDIO_BUCKET, // your R2 binding
+    destinationId: "studio-bucket",
+    fit: createImagesReferenceFitter(env.IMAGES),
+    authorize: (key) =&gt; assertActorMayUse(actorId, key), // your permission check
+  &#125;),
+&#125;);</code></pre>
+    <p>Images are limited to 8 MiB and audio to 16 MiB per reference. A retry with the same request ID reuses the saved output instead of calling the provider again.</p>
     <h3>Check a live studio without the browser</h3>
     <pre><code>curl -s https://your-studio.example/healthz
 # &#123;"ok":true,"revision":"&lt;40-char sha&gt;","bridge":true,...&#125;
@@ -463,7 +490,7 @@ curl -s -o /dev/null -w '%&#123;http_code&#125;\n' https://your-studio.example/a
       <div><dt>Migration fails on a foreign key</dt><dd>The parent table is referenced. Rebuild the parent, then the children, then drop the old parent; copy rows and restore self-references in a second pass.</dd></div>
       <div><dt>Handoff rejected as expired</dt><dd>Seconds versus milliseconds. Normalise the unit; do not lengthen the token to hide it.</dd></div>
       <div><dt>Render job stuck at "result unavailable"</dt><dd>Reconcile. It re-reads the same provider result. If the provider's own detail names an invalid input, fix the request shape — that is how the single-input portrait-cut attempt was found.</dd></div>
-      <div><dt>Images binding error 9432 on the Oyster route</dt><dd>Legacy billing on that account. It blocks the host's reference fitter, not the studio's own reference variation. Enable Cloudflare Images or migrate billing, and label which route produced which result.</dd></div>
+      <div><dt>Images binding error 9432 on the Oyster route</dt><dd>Legacy billing on that account. It blocks the host's reference fitter, not the studio's own reference variation. Enable Cloudflare Images or migrate billing, and label which route produced which result. The R2 destination above uses the same Images fitter, so it needs the same fix.</dd></div>
       <div><dt>Video refused: AI Gateway could not fund this request</dt><dd>Check the saved job and provider status. An unknown outcome keeps its reservation; reconcile it without another paid submission. Do not assume billing or retry an ambiguous job.</dd></div>
       <div><dt>Blank media card after publishing</dt><dd>Check the asset revision and its publications. Withdrawal revokes the page; hiding only removes the card.</dd></div>
     </dl>
